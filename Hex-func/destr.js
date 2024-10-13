@@ -1,7 +1,17 @@
-const func = (x) => {
-  console.log(x);
-}
+// const func = (x) => {
+//   console.log(x);
+// }
 
-const dd = [1, 3]
+// const dd = [1, 3]
 
-console.log(func(dd));
+const company = {
+  name: null,
+  state: 'moderating',
+};
+
+const data = {
+  name: 'Hexlet',
+  state: 'published',
+};
+
+
