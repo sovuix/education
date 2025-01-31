@@ -1,88 +1,49 @@
 import onChange from '../../node_modules/on-change/index.js';
 
-// const app = () => {
-
-//   const state = {
-//     activeLeng: '',
-//     // activeSecLeng: 'javascript' 
-//   }
-
-//   const listLeng = document.querySelectorAll('.list-group-item');
-
-//   listLeng.forEach((item) => {
-//     if(item.classList.contains('active')) {
-//       state.activeLeng = item.textContent.trim();
-//     }
-//     item.addEventListener('click', (e) => {
-//       e.preventDefault();
-//       const target = e.target;
-//       const targetLang = target.textContent.trim();
-//       if(targetLang !== state.activeLeng){
-//         // item.classList.remove('active');
-//         console.log(item);
-//         console.log(state.activeLeng);
-
-        
-//         target.classList.add('active');
-//       }
-      
-//     })
-//   })
-    
-
-  
-// }
-
-
-// app();
-
 const app = () => {
   const state = {
-    activeLeng: '',
+    activeTab: null,
   };
 
-  const listLeng = document.querySelectorAll('.list-group-item');
-  const content = document.querySelectorAll('.card body tab-pane');
+  const render = () => {
+    if (!state.activeTab) return;
+    const tabLinks = document.querySelectorAll('[data-bs-toggle="list"]');
+    const tabContents = document.querySelectorAll('.tab-pane');
 
-  listLeng.forEach((item) => {
-    if (item.classList.contains('active')) {
-      state.activeLeng = item.textContent.trim();
-    }
-
-    item.addEventListener('click', (e) => {
-      e.preventDefault();
-    
-      const target = e.target;
-      const targetLang = target.textContent.trim();
-    
-      if (targetLang !== state.activeLeng) {
-        listLeng.forEach((el) => el.classList.remove('active'));
-    
-        target.classList.add('active');
-    
-        state.activeLeng = targetLang;
-        console.log(`${state.activeLeng}`);
+    // tabLinks.forEach((tab) => {
+    //   const targetId = tab.getAttribute('href').substring(1);
+    //   tab.classList.toggle('active', targetId === state.activeTab);
+    // });
+    tabLinks.forEach((tab) => {
+      const targetId = tab.getAttribute('href').substring(1);
+      tab.classList.remove('active');
+      if (targetId === state.activeTab) {
+        tab.classList.add('active');
       }
     });
-  })
 
-content.forEach((item) => console.log(item));
+    //   tabContents.forEach((content) => {
+    //     content.classList.toggle('active', content.id === state.activeTab);
+    //     content.classList.toggle('show', content.id === state.activeTab);
+    //   });
+    // };
+    tabContents.forEach((content) => {
+      content.classList.remove('active', 'show');
+      if (content.id === state.activeTab) {
+        content.classList.add('active', 'show');
+      }
+    });
+  };
 
+  const watchedState = onChange(state, render);
+
+  document.querySelectorAll('[data-bs-toggle="list"]').forEach((tab) => {
+    tab.addEventListener('click', (event) => {
+      event.preventDefault();
+      watchedState.activeTab = tab.getAttribute('href').substring(1);
+    });
+  });
+  render();
 };
 
 app();
-
-const content = document.querySelectorAll('.tab-pane');
-
-  content.forEach((item) => {
-    const dataId = item.getAttribute('data-testid'); // Получаем значение атрибута data-id
-    if (dataId === 'list-python') { // Замените 'ваше_значение' на нужное вам значение
-        // Здесь выполняем нужные действия с элементом
-        console.log('Элемент найден:', item);
-    }
-});
-
-
-
-
-
