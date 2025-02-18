@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "i18next": "^24.2.2",
     "on-change": "^5.0.1",
     "vite": "^6.1.0"
   }
